@@ -8,11 +8,22 @@ function Counter({initialCount = 0, step = 1}) {
   // const [count, setCount] = React.useReducer(countReducer, initialCount)
   // const increment = () => setCount(count + step)
   // Extra Credit #1 💯
-  const [count, changeCount] = React.useReducer(countReducer, initialCount)
-  const increment = () => changeCount(step)
-  // const [count, setCount] = React.useState(initialCount)
-  function countReducer(state, step) {
-    return state + step
+  // const [count, changeCount] = React.useReducer(countReducer, initialCount)
+  // const increment = () => changeCount(step)
+  // // const [count, setCount] = React.useState(initialCount)
+  // function countReducer(state, step) {
+  //   return state + step
+  // }
+  // Extra Credit #2 💯
+
+  const [state, setState] = React.useReducer(countReducer, {
+    count: initialCount,
+  })
+  const {count} = state
+  const increment = () => setState({count: count + step})
+
+  function countReducer(state, newState) {
+    return {...state, ...newState}
   }
   // 💰 you can write the countReducer function so you don't have to make any
   // changes to the next two lines of code! Remember:
