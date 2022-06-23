@@ -27,13 +27,36 @@ function asyncReducer(state, action) {
   }
 }
 
+function useSafeDispatch(dispatch) {
+  const isMountedRef = React.useRef(false)
+
+  React.useLayoutEffect(() => {
+    isMountedRef.current = true
+
+    return () => {
+      isMountedRef.current = false
+    }
+  }, [])
+
+  return React.useCallback(
+    (...args) => {
+      if (isMountedRef.current) {
+        dispatch(...args)
+      }
+    },
+    [dispatch],
+  )
+}
+
 function useAsync(initialState) {
-  const [state, dispatch] = React.useReducer(asyncReducer, {
+  const [state, unsafeDispatch] = React.useReducer(asyncReducer, {
     status: 'idle',
     data: null,
     error: null,
     ...initialState,
   })
+
+  const dispatch = useSafeDispatch(unsafeDispatch)
 
   const run = React.useCallback(promise => {
     dispatch({type: 'pending'})
@@ -51,18 +74,11 @@ function useAsync(initialState) {
   const {data, status, error} = state
   return {data, status, error, run}
 }
+
 function PokemonInfo({pokemonName}) {
-  const isMountedRef = React.useRef(true)
   const {data, status, error, run} = useAsync({
     status: pokemonName ? 'pending' : 'idle',
   })
-
-  React.useEffect(() => {
-    return () => {
-      isMountedRef.current = false
-      console.log('IN 2nd isMountedRef.current:', isMountedRef.current)
-    }
-  }, [])
 
   React.useEffect(() => {
     if (!pokemonName) {
@@ -72,10 +88,7 @@ function PokemonInfo({pokemonName}) {
     // to `run` so `useAsync` can attach it's own `.then` handler on it to keep
     // track of the state of the promise.
     const pokemonPromise = fetchPokemon(pokemonName)
-    if (isMountedRef.current) {
-      console.log('isMountedRef.current:', isMountedRef.current)
-      run(pokemonPromise)
-    }
+    run(pokemonPromise)
   }, [pokemonName, run])
 
   switch (status) {
