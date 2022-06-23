@@ -52,9 +52,17 @@ function useAsync(initialState) {
   return {data, status, error, run}
 }
 function PokemonInfo({pokemonName}) {
+  const isMountedRef = React.useRef(true)
   const {data, status, error, run} = useAsync({
     status: pokemonName ? 'pending' : 'idle',
   })
+
+  React.useEffect(() => {
+    return () => {
+      isMountedRef.current = false
+      console.log('IN 2nd isMountedRef.current:', isMountedRef.current)
+    }
+  }, [])
 
   React.useEffect(() => {
     if (!pokemonName) {
@@ -64,7 +72,10 @@ function PokemonInfo({pokemonName}) {
     // to `run` so `useAsync` can attach it's own `.then` handler on it to keep
     // track of the state of the promise.
     const pokemonPromise = fetchPokemon(pokemonName)
-    run(pokemonPromise)
+    if (isMountedRef.current) {
+      console.log('isMountedRef.current:', isMountedRef.current)
+      run(pokemonPromise)
+    }
   }, [pokemonName, run])
 
   switch (status) {
