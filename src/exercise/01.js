@@ -35,7 +35,7 @@ function Counter({initialCount = 0, step = 3}) {
 
   // function countReducer(state, action) {
   //   if (typeof action === 'function') {
-  //     return action(state)
+  //     return {...state, ...action(state)}
   //   } else {
   //     return {...state, ...action}
   //   }
