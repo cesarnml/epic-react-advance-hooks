@@ -73,6 +73,8 @@ const updateLocalStorage = React.useCallback(
 )
 ```
 
+- `mountedRef` should be initialized to `false` by default
+
 ### Lesson 03 - useContext: simple Counter
 
 
