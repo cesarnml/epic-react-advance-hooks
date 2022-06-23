@@ -4,6 +4,10 @@
 
 ### Lesson 01 - useReducer: simple Counter function
 
+- `useReducer` comes in handy when:
+  - Separate the state logic from the component that triggers the state change event
+  - You have multiple pieces of state that often change together
+- `useReducer` API: `const [state, dispatch] = useReducer(reducer, initialState)`
 
 ### Lesson 02 - useCallback: custom Hooks
 
