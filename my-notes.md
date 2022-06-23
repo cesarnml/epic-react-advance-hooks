@@ -27,6 +27,51 @@ const [state, dispatch] = React.useReducer(reducer, props.initialState, init)
 
 ### Lesson 02 - useCallback: custom Hooks
 
+- Generic `memoization` abstraction:
+
+```typescript
+function memoize<ArgType, ReturnValue>(cb: (arg: ArgType) => ReturnValue) {
+  const cache: Record<ArgType, ReturnValue> = {}
+  return function memoized(arg: ArgType) {
+    if (cache[arg] === undefined) {
+      cache[arg] = cb(arg)
+    }
+    return cache[arg]
+  }
+}
+
+// This is JS equivalent
+const memo = (cb: ((...args) => {})) => {
+  const cache = {}
+  return (...args) => {
+  if (cache[JSON.stringify(args)] === undefined) {
+  console.log(`New value ${args}`)
+  cache[JSON.stringify(args)] = cb(...args)
+  }
+  return cache[JSON.stringify(args)]
+  }
+}
+
+const addOne = memoize((num: number) => num + 1)
+const getDog = memoize((name: string) => new Dog(name))
+```
+
+- `useCallback` is short-hard for `useMemo` when we want to return a function
+
+```JavaScript
+// the useMemo version:
+const updateLocalStorage = React.useMemo(
+  // useCallback saves us from this annoying double-arrow function thing:
+  () => () => window.localStorage.setItem('count', count),
+  [count],
+)
+
+// the useCallback version
+const updateLocalStorage = React.useCallback(
+  () => window.localStorage.setItem('count', count),
+  [count],
+)
+```
 
 ### Lesson 03 - useContext: simple Counter
 
