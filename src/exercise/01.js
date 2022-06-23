@@ -26,18 +26,33 @@ function Counter({initialCount = 0, step = 3}) {
   //   return {...state, ...newState}
   // }
   // Extra Credit #3 💯
-  const [state, setState] = React.useReducer(countReducer, {
+  // const [state, setState] = React.useReducer(countReducer, {
+  //   count: initialCount,
+  // })
+  // const {count} = state
+  // const increment = () =>
+  //   setState(currentState => ({count: currentState.count + step}))
+
+  // function countReducer(state, action) {
+  //   if (typeof action === 'function') {
+  //     return action(state)
+  //   } else {
+  //     return {...state, ...action}
+  //   }
+  // }
+  // Extra Credit #4 💯
+  const [state, dispatch] = React.useReducer(countReducer, {
     count: initialCount,
   })
   const {count} = state
-  const increment = () =>
-    setState(currentState => ({count: currentState.count + step}))
+  const increment = () => dispatch({type: 'INCREMENT', step})
 
   function countReducer(state, action) {
-    if (typeof action === 'function') {
-      return action(state)
-    } else {
-      return {...state, ...action}
+    switch (action.type) {
+      case 'INCREMENT':
+        return {count: state.count + action.step}
+      default:
+        return state
     }
   }
   // 💰 you can write the countReducer function so you don't have to make any
