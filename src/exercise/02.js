@@ -28,19 +28,19 @@ function asyncReducer(state, action) {
 }
 
 function useSafeDispatch(dispatch) {
-  const isMountedRef = React.useRef(false)
+  const mountedRef = React.useRef(false)
 
   React.useLayoutEffect(() => {
-    isMountedRef.current = true
+    mountedRef.current = true
 
     return () => {
-      isMountedRef.current = false
+      mountedRef.current = false
     }
   }, [])
 
   return React.useCallback(
     (...args) => {
-      if (isMountedRef.current) {
+      if (mountedRef.current) {
         dispatch(...args)
       }
     },
