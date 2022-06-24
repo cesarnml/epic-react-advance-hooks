@@ -74,6 +74,7 @@ const updateLocalStorage = React.useCallback(
 ```
 
 - `mountedRef` should be initialized to `false` by default
+- **The `entire purpose` of `useCallback` is to memoize a callback for use in `dependency lists` and `props on memoized components` (via `React.memo`)**
 
 ### Lesson 03 - useContext: simple Counter
 
