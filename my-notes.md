@@ -78,9 +78,12 @@ const updateLocalStorage = React.useCallback(
 
 ### Lesson 03 - useContext: simple Counter
 
+- Didn't learn anything new.
+
 
 ### Lesson 04 - useLayoutEffect: auto-scrolling textarea
 
+- If you are making observable changes to the DOM, then it should happen in useLayoutEffect, otherwise useEffect
 
 ### Lesson 05 - useImperativeHandle: scroll to top/bottom
 
