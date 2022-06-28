@@ -49,10 +49,10 @@ function App() {
         🐨 wrap these two components in the CountProvider so they can access
         the CountContext value
       */}
-      <div>
+      <CountProvider>
         <CountDisplay />
         <Counter />
-      </div>
+      </CountProvider>
     </div>
   )
 }
