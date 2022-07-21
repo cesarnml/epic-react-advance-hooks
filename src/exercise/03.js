@@ -44,16 +44,10 @@ function Counter() {
 
 function App() {
   return (
-    <div>
-      {/*
-        🐨 wrap these two components in the CountProvider so they can access
-        the CountContext value
-      */}
-      <CountProvider>
-        <CountDisplay />
-        <Counter />
-      </CountProvider>
-    </div>
+    <CountProvider>
+      <CountDisplay />
+      <Counter />
+    </CountProvider>
   )
 }
 

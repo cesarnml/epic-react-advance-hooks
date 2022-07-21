@@ -12,6 +12,7 @@
   - `state` as the first argument
   - `action` as the second argument (i.e. whatever you pass to `dispatch`)
   - Third argument to `useReducer`
+    - Allows for `lazy initialization of the state` by passing an `init` function
 
 ```javascript
 function init(initialStateFromProps) {
@@ -23,6 +24,40 @@ function init(initialStateFromProps) {
 }
 
 const [state, dispatch] = React.useReducer(reducer, props.initialState, init)
+```
+
+- type definition of `useReducer` hook (don't stare to long it might blind you)
+
+```typescript
+type Dispatch<A> = (value: A) => void
+type Reducer<S, A> = (prevState: S, action: A) => S
+type ReducerState<R extends Reducer<any, any>> = R extends Reducer<infer S, any>
+  ? S
+  : never
+type ReducerAction<R extends Reducer<any, any>> = R extends Reducer<
+  any,
+  infer A
+>
+  ? A
+  : never
+
+function useReducer<R extends Reducer<any, any>, I>(
+  reducer: R,
+  initializerArg: I & ReducerState<R>,
+  initializer: (arg: I & ReducerState<R>) => ReducerState<R>,
+): [ReducerState<R>, Dispatch<ReducerAction<R>>]
+
+function useReducer<R extends Reducer<any, any>, I>(
+  reducer: R,
+  initializerArg: I,
+  initializer: (arg: I) => ReducerState<R>,
+): [ReducerState<R>, Dispatch<ReducerAction<R>>]
+
+function useReducer<R extends Reducer<any, any>>(
+  reducer: R,
+  initialState: ReducerState<R>,
+  initializer?: undefined,
+): [ReducerState<R>, Dispatch<ReducerAction<R>>]
 ```
 
 ### Lesson 02 - useCallback: custom Hooks
@@ -78,8 +113,7 @@ const updateLocalStorage = React.useCallback(
 
 ### Lesson 03 - useContext: simple Counter
 
-- Didn't learn anything new.
-
+- *Keeping context value scoped to the area that needs it most has improved performance and maintainability.
 
 ### Lesson 04 - useLayoutEffect: auto-scrolling textarea
 
