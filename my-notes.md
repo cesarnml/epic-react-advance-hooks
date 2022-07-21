@@ -113,7 +113,7 @@ const updateLocalStorage = React.useCallback(
 
 ### Lesson 03 - useContext: simple Counter
 
-- *Keeping context value scoped to the area that needs it most has improved performance and maintainability.
+- *Keeping context value scoped to the area that needs it most has improved performance and maintainability*
 
 ### Lesson 04 - useLayoutEffect: auto-scrolling textarea
 
