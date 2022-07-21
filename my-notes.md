@@ -10,7 +10,7 @@
 - `useReducer` API: `const [state, dispatch] = useReducer(reducer, initialState)`
 - `reducer` receives
   - `state` as the first argument
-  - `action` as the second argument (whatever you pass to `dispatch`)
+  - `action` as the second argument (i.e. whatever you pass to `dispatch`)
   - Third argument to `useReducer`
 
 ```javascript
