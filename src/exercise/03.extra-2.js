@@ -25,11 +25,6 @@ const PokemonCacheContext = React.createContext()
 // 💰 value={[cache, dispatch]}
 // 💰 make sure you forward the props.children!
 
-function PokemonCacheProvider(props) {
-  const [cache, dispatch] = React.useReducer(pokemonCacheReducer, {})
-  return <PokemonCacheContext.Provider {...props} value={{cache, dispatch}} />
-}
-
 function pokemonCacheReducer(state, action) {
   switch (action.type) {
     case 'ADD_POKEMON': {
@@ -41,11 +36,25 @@ function pokemonCacheReducer(state, action) {
   }
 }
 
+function PokemonCacheProvider(props) {
+  const [cache, dispatch] = React.useReducer(pokemonCacheReducer, {})
+  return <PokemonCacheContext.Provider {...props} value={{cache, dispatch}} />
+}
+
+function usePokemonCache() {
+  const context = React.useContext(PokemonCacheContext)
+  if (!context) {
+    throw new Error(
+      'usePokemonCache must be used within a PokemonCacheProvider',
+    )
+  }
+  return context
+}
 function PokemonInfo({pokemonName}) {
   // 💣 remove the useReducer here (or move it up to your PokemonCacheProvider)
   // 🐨 get the cache and dispatch from useContext with PokemonCacheContext
+  const {cache, dispatch} = usePokemonCache()
 
-  const {cache, dispatch} = React.useContext(PokemonCacheContext)
   const {data: pokemon, status, error, run, setData} = useAsync()
 
   React.useEffect(() => {
@@ -76,7 +85,7 @@ function PokemonInfo({pokemonName}) {
 
 function PreviousPokemon({onSelect}) {
   // 🐨 get the cache from useContext with PokemonCacheContext
-  const {cache} = React.useContext(PokemonCacheContext)
+  const {cache} = usePokemonCache()
   return (
     <div>
       Previous Pokemon
