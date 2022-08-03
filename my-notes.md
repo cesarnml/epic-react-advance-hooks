@@ -126,6 +126,9 @@ const updateLocalStorage = React.useCallback(
 
 ### Lesson 05 - useImperativeHandle: scroll to top/bottom
 
+- First pass a `componentRef = React.useRef()` to a React component
+- Wrap the `Component` in `React.forwardRef(Component(props,ref) => componentBody)`
+- Within `componentBody` use `React.imperativeHandle(ref, () => ({methods})` to add methods to ref which parent componet will have access to within the child
 
 ### Lesson 06 - useDebugValue: useMedia
 
