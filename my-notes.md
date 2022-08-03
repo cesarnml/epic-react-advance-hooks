@@ -117,7 +117,12 @@ const updateLocalStorage = React.useCallback(
 
 ### Lesson 04 - useLayoutEffect: auto-scrolling textarea
 
-- If you are making observable changes to the DOM, then it should happen in useLayoutEffect, otherwise useEffect
+- If you are making observable changes to the DOM, then it should happen in `useLayoutEffect`, otherwise useEffect
+- In practice, if you see a flicker in between the DOM rendering and the useEffect firing, use `useLayoutEffect`
+- *user deosn't acrtually see the updates until after the browser has repainted*
+- DOM updates occur prior to repaint
+- It's also useful to use `useLayoutEffect` when you want to guarantee and effect will run before all other `useEffect` calls (e.g. when updating a `ref` value)
+- The default effect behavior is to not block browser repaint (makes changes snappier)
 
 ### Lesson 05 - useImperativeHandle: scroll to top/bottom
 
