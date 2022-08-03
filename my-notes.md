@@ -132,3 +132,5 @@ const updateLocalStorage = React.useCallback(
 
 ### Lesson 06 - useDebugValue: useMedia
 
+- `useDebugValue` is a useful hook for debugging purposes. Only to be used in custom hooks (NOT within components)
+- Takes an argument that will be used to label custom hook instance
